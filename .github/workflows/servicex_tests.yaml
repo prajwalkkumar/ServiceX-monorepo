@@ -41,6 +41,7 @@ jobs:
           codecov --token=${{ secrets.CODECOV_TOKEN }}
 
   test-did-finder-python:
+    needs: test-servicex-app
     strategy:
       matrix:
         python-version: [ 3.7 ]

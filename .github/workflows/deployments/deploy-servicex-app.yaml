@@ -1,0 +1,24 @@
+name: DEPLOY-SERVICEX-APP
+
+on:
+  workflow_call:
+
+jobs:
+  publish-servicex-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Extract tag name
+        working-directory: ./servicex_app
+        shell: bash
+        run: echo "##[set-output name=imagetag;]$(echo ${GITHUB_REF##*/})"
+        id: extract_tag_name
+
+      - name: Build Docker Image
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sslhep/servicex_app:${{ steps.extract_tag_name.outputs.imagetag }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tag: "${GITHUB_REF##*/}"
+

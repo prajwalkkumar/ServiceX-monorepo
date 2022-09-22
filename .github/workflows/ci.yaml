@@ -1,43 +1,22 @@
-name: DEPLOY
+name: CI/CD
 
 on:
-  workflow_call:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*"
+  pull_request:
 
 jobs:
-  publish-servicex-app:
-    runs-on: ubuntu-latest
-#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    steps:
-      - uses: actions/checkout@master
-      - name: Extract tag name
-        working-directory: ./servicex_app
-        shell: bash
-        run: echo "##[set-output name=imagetag;]$(echo ${GITHUB_REF##*/})"
-        id: extract_tag_name
+  call-test-did-finder:
+    uses: ./.github/workflows/tests/test-did-finder-python.yaml
+  call-deploy-did-finder:
+    needs: call-test-did-finder
+    uses: ./.github/workflows/deployments/deploy-did-finder-python.yaml
 
-      - name: Build Docker Image
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: sslhep/servicex_app:${{ steps.extract_tag_name.outputs.imagetag }}
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag: "${GITHUB_REF##*/}"
-  publish-did-finder-python:
-    runs-on: ubuntu-latest
-#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    steps:
-    - uses: actions/checkout@master
-
-    - name: Extract tag name
-      working-directory: ./servicex_did_finder_python
-      shell: bash
-      run: echo "##[set-output name=imagetag;]$(echo ${GITHUB_REF##*/})"
-      id: extract_tag_name
-
-    - name: Build Uproot Image
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: sslhep/servicex_code_gen_python:${{ steps.extract_tag_name.outputs.imagetag }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
+  call-test-servicex-app:
+    uses: ./.github/workflows/tests/test-servicex-app.yaml
+  call-deploy-servicex-app:
+    needs: call-test-servicex-app
+    uses: ./.github/workflows/deployments/deploy-servicex-app.yaml

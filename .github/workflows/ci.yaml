@@ -1,11 +1,7 @@
 name: DEPLOY
 
 on:
-  workflow_run:
-    workflows:
-      - "TESTS"
-    types:
-      - "completed"
+  workflow_call:
 
 jobs:
   publish-servicex-app:

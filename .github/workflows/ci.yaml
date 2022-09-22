@@ -11,6 +11,8 @@ on:
 jobs:
   call-test-did-finder:
     uses: ./.github/workflows/test-did-finder-python.yaml
+    secrets:
+      username: ${{ secrets.DOCKER_USERNAME }}
   call-deploy-did-finder:
     needs: call-test-did-finder
     uses: ./.github/workflows/deploy-did-finder-python.yaml

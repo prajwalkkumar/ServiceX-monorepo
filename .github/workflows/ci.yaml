@@ -11,14 +11,18 @@ on:
 jobs:
   call-test-did-finder:
     uses: ./.github/workflows/test-did-finder-python.yaml
-    secrets:
-      username: ${{ secrets.DOCKER_USERNAME }}
   call-deploy-did-finder:
     needs: call-test-did-finder
     uses: ./.github/workflows/deploy-did-finder-python.yaml
+    secrets:
+      username: ${{ secrets.DOCKER_USERNAME }}
+      password: ${{ secrets.DOCKER_PASSWORD }}
 
   call-test-servicex-app:
     uses: ./.github/workflows/test-servicex-app.yaml
   call-deploy-servicex-app:
     needs: call-test-servicex-app
     uses: ./.github/workflows/deploy-servicex-app.yaml
+    secrets:
+      username: ${{ secrets.DOCKER_USERNAME }}
+      password: ${{ secrets.DOCKER_PASSWORD }}

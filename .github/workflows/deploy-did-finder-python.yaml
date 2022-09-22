@@ -23,6 +23,7 @@ jobs:
     - name: Build Uproot Image
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
+        context: ./servicex_did_finder_python
         name: sslhep/servicex_code_gen_python:${{ steps.extract_tag_name.outputs.imagetag }}
         username: ${{ secrets.username }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        password: ${{ secrets.password }}

@@ -10,13 +10,13 @@ on:
 
 jobs:
   call-test-did-finder:
-    uses: ./.github/workflows/tests/test-did-finder-python.yaml
+    uses: ./.github/workflows/test-did-finder-python.yaml
   call-deploy-did-finder:
     needs: call-test-did-finder
-    uses: ./.github/workflows/deployments/deploy-did-finder-python.yaml
+    uses: ./.github/workflows/deploy-did-finder-python.yaml
 
   call-test-servicex-app:
-    uses: ./.github/workflows/tests/test-servicex-app.yaml
+    uses: ./.github/workflows/test-servicex-app.yaml
   call-deploy-servicex-app:
     needs: call-test-servicex-app
-    uses: ./.github/workflows/deployments/deploy-servicex-app.yaml
+    uses: ./.github/workflows/deploy-servicex-app.yaml

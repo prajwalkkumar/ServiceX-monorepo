@@ -6,7 +6,7 @@ on:
 jobs:
   publish-servicex-app:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@master
       - name: Extract tag name
@@ -24,7 +24,7 @@ jobs:
           tag: "${GITHUB_REF##*/}"
   publish-did-finder-python:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - uses: actions/checkout@master
 

@@ -11,12 +11,6 @@ jobs:
   publish-servicex-app:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        working-directory: ./servicex_app
-        with:
-          ref: $
-      - run: git branch
-      - run: env
       - uses: actions/checkout@master
       - name: Extract tag name
         working-directory: ./servicex_app

@@ -9,11 +9,34 @@ on:
   pull_request:
 
 jobs:
-  test-servicex-app:
+  defaults:
+    dockerfile: "Dockerfile"
+  test-servicex:
     strategy:
+      fail-fast: false
       matrix:
         python-version: [ 3.7 ]
-        app: ["servicex_app","servicex_code_gen_python"]
+        app:
+#          - image_name: "servicex_app"
+#            dir_name: "servicex_app"
+#          - image_name: "servicex_code_gen_python"
+#            dir_name: "servicex_code_gen_python"
+#          - image_name: "servicex_app"
+#            dir_name: "servicex_app"
+#          - image_name: "servicex_code_gen_python"
+#            dir_name: "servicex_code_gen_python"
+#          - image_name: "servicex_app"
+#            dir_name: "servicex_app"
+#          - image_name: "servicex_code_gen_python"
+#            dir_name: "servicex_code_gen_python"
+#          - image_name: "servicex_app"
+#            dir_name: "servicex_app"
+#          - image_name: "servicex_code_gen_python"
+#            dir_name: "servicex_code_gen_python"
+#          - image_name: "servicex_app"
+#            dir_name: "servicex_app"
+#          - image_name: "servicex_func_adl_cms_aod_transformer",
+#            dir_name: "xaod_cpp_transformer"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -27,19 +50,39 @@ jobs:
           pip install --no-cache-dir -r requirements.txt
           pip install --no-cache-dir -r requirements_dev.txt
           pip list
-        working-directory: ${{ matrix.app }}
+        working-directory: ${{ matrix.app.dir_name }}
       - name: Lint with Flake8
-        working-directory: ${{ matrix.app }}
+        working-directory: ${{ matrix.app.dir_name }}
         run: |
           flake8
       - name: Test with pytest
-        working-directory: ${{ matrix.app }}
+        working-directory: ${{ matrix.app.dir_name }}
         run: |
           python -m coverage run -m pytest -r sx
       - name: Report coverage with Codecov
-        working-directory: ${{ matrix.app }}
+        working-directory: ${{ matrix.app.dir_name }}
         run: |
           codecov --token=${{ secrets.CODECOV_TOKEN }}
+
+  publish-servicex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Extract tag name
+        working-directory: ${{ matrix.app.dir_name }}
+        shell: bash
+        run: echo "##[set-output name=imagetag;]$(echo ${GITHUB_REF##*/})"
+        id: extract_tag_name
+
+      - name: Build Uproot Image
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          context: ${{ matrix.app.dir_name }}
+          name: sslhep/${{ matrix.app.image_name }}:${{ steps.extract_tag_name.outputs.imagetag }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: ${{ jobs.defaults.dockerfile }}
 
 #  call-test-code-gen-python:
 #    strategy:

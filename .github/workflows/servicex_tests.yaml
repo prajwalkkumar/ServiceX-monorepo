@@ -64,6 +64,9 @@ jobs:
         working-directory: ./servicex_did_finder_python
         run: |
           flake8 --exclude=tests/* --ignore=E501
+      - name: FAIL
+        working-directory: ./servicex_did_finder_python
+        run: exit 1
 
   call-workflow-2-in-local-repo:
     needs: test-did-finder-python

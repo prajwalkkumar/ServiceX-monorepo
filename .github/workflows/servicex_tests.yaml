@@ -59,10 +59,10 @@ jobs:
           pip install --no-cache-dir -r requirements.txt
           pip install --no-cache-dir -r requirements_dev.txt
           pip list
-      - name: Lint with Flake8
-        working-directory: ./servicex_did_finder_python
-        run: |
-          flake8 --exclude=tests/* --ignore=E501
+#      - name: Lint with Flake8
+#        working-directory: ./servicex_did_finder_python
+#        run: |
+#          flake8 --exclude=tests/* --ignore=E501
 
   call-workflow-2-in-local-repo:
     needs: test-did-finder-python

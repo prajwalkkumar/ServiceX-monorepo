@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Extract tag name
-      working-directory: ./servicex_did_finder_python
+      working-directory: ./servicex_code_gen_python
       shell: bash
       run: echo "##[set-output name=imagetag;]$(echo ${GITHUB_REF##*/})"
       id: extract_tag_name
@@ -23,7 +23,7 @@ jobs:
     - name: Build Uproot Image
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        context: ./servicex_did_finder_python
+        context: ./servicex_code_gen_python
         name: sslhep/servicex_code_gen_python:${{ steps.extract_tag_name.outputs.imagetag }}
         username: ${{ secrets.username }}
         password: ${{ secrets.password }}

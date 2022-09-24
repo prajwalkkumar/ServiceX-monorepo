@@ -12,20 +12,18 @@ jobs:
   build-matrix:
     runs-on: ubuntu-latest
     steps:
-      - id: set_matrix
-        run: |
-          pwd
-          JSON=$(cat deploy-config.json)
-          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "deploy-config.json"
   test-servicex:
     needs: build-matrix
     strategy:
       fail-fast: false
       matrix:
         python-version: [ 3.7 ]
-        app: ${{fromJson(needs.job1.outputs.matrix)}}
+        app: ${{fromJson(needs.build-matrix.steps.read_file.outputs.contents)}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master

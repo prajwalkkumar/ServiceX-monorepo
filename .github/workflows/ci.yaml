@@ -29,8 +29,8 @@ jobs:
 #          content="${content//$'\r'/'%0D'}"
 #          # end of optional handling for multi line json
 #          echo "::set-output name=packageJson::$content"
-#      - run: |
-#          echo "${{fromJson(steps.outputs.packageJson)}}"
+      - run: |
+          echo "${{ steps.set-matrix.outputs.matrix)}}"
   test-servicex:
     needs: build-matrix
     strategy:

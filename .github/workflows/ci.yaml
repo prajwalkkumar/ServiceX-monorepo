@@ -14,9 +14,10 @@ jobs:
     steps:
       - name: Read file contents
         id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "deploy-config.json"
+        run: ls -lrt
+#        uses: andstor/file-reader-action@v1
+#        with:
+#          path: "deploy-config.json"
   test-servicex:
     needs: build-matrix
     strategy:

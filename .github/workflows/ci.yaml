@@ -11,27 +11,33 @@ on:
 jobs:
   build-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@master
       - name: Read file contents
-        id: set_var
+        id: set-matrix
         run: |
-          content=`cat deploy-config.json`
-          # the following lines are only required for multi line json
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          # end of optional handling for multi line json
-          echo "::set-output name=packageJson::$content"
-      - run: |
-          echo "${{fromJson(steps.set_var.outputs.packageJson)}}"
+          JSON=$(cat deploy-config.json)
+          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
+#        id: set_var
+#        run: |
+#          content=`cat deploy-config.json`
+#          # the following lines are only required for multi line json
+#          content="${content//'%'/'%25'}"
+#          content="${content//$'\n'/'%0A'}"
+#          content="${content//$'\r'/'%0D'}"
+#          # end of optional handling for multi line json
+#          echo "::set-output name=packageJson::$content"
+#      - run: |
+#          echo "${{fromJson(steps.outputs.packageJson)}}"
   test-servicex:
     needs: build-matrix
     strategy:
       fail-fast: false
       matrix:
         python-version: [ 3.7 ]
-        app: ${{fromJson(needs.build-matrix.steps.set_var.outputs.packageJson)}}
+#        app: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -41,7 +47,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          "echo ${{ matrix }}"
+          echo "${{ matrix.app }}"
           python -m pip install --upgrade pip setuptools wheel
           pip install --no-cache-dir -r requirements.txt
           pip install --no-cache-dir -r requirements_dev.txt

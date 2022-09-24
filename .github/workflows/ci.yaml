@@ -13,11 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Read file contents
-        run: ls -lrt
-#        id: read_file
-#        uses: andstor/file-reader-action@v1
-#        with:
-#          path: "deploy-config.json"
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "deploy-config.json"
   test-servicex:
     needs: build-matrix
     strategy:

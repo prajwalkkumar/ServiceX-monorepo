@@ -76,23 +76,3 @@ jobs:
           name: sslhep/${{ matrix.app.image_name }}:${{ steps.extract_tag_name.outputs.imagetag }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-#  call-test-code-gen-python:
-#    strategy:
-#      matrix:
-#        app-version: [ "app", "did-finder"]
-#    uses: ./.github/workflows/test-code-gen-python.yaml
-#  call-deploy-code-gen:
-#    needs: call-test-did-finder
-#    uses: ./.github/workflows/deploy-code-gen-python.yaml
-#    secrets:
-#      username: ${{ secrets.DOCKER_USERNAME }}
-#      password: ${{ secrets.DOCKER_PASSWORD }}
-#  call-test-servicex-app:
-#    uses: ./.github/workflows/test-servicex-app.yaml
-#  call-deploy-servicex-app:
-#    needs: call-test-servicex-app
-#    uses: ./.github/workflows/deploy-servicex-app.yaml
-#    secrets:
-#      username: ${{ secrets.DOCKER_USERNAME }}
-#      password: ${{ secrets.DOCKER_PASSWORD }}

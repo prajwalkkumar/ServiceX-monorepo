@@ -14,11 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Read file contents
-        id: read_file
-#        run: cd ./github/workflows | ls -lrt
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "deploy-config.json"
+      - id: set_var
+        run: |
+          content=`cat deploy-config.json`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=packageJson::$content"
+      - run: |
+          echo "${{fromJson(steps.set_var.outputs.packageJson)}}"
   test-servicex:
     needs: build-matrix
     strategy:

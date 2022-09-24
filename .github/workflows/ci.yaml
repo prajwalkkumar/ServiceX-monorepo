@@ -12,9 +12,9 @@ jobs:
   build-matrix:
     runs-on: ubuntu-latest
     steps:
+      - id: set_var
       - uses: actions/checkout@master
       - name: Read file contents
-      - id: set_var
         run: |
           content=`cat deploy-config.json`
           # the following lines are only required for multi line json
@@ -23,7 +23,8 @@ jobs:
           content="${content//$'\r'/'%0D'}"
           # end of optional handling for multi line json
           echo "::set-output name=packageJson::$content"
-      - run: |
+      - name: Output file contents
+        run: |
           echo "${{fromJson(steps.set_var.outputs.packageJson)}}"
   test-servicex:
     needs: build-matrix

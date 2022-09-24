@@ -12,6 +12,7 @@ jobs:
   build-matrix:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Read file contents
         id: read_file
         run: ls -lrt

@@ -15,10 +15,10 @@ jobs:
       - uses: actions/checkout@master
       - name: Read file contents
         id: read_file
-        run: ls -lrt
-#        uses: andstor/file-reader-action@v1
-#        with:
-#          path: "deploy-config.json"
+#        run: cd ./github/workflows | ls -lrt
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "deploy-config.json"
   test-servicex:
     needs: build-matrix
     strategy:
@@ -35,6 +35,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
+          echo "${{matrix}}"
           python -m pip install --upgrade pip setuptools wheel
           pip install --no-cache-dir -r requirements.txt
           pip install --no-cache-dir -r requirements_dev.txt

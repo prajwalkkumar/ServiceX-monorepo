@@ -24,14 +24,14 @@ jobs:
           # end of optional handling for multi line json
           echo "::set-output name=packageJson::$content"
       - run: |
-          echo "${{fromJson(steps.set_var.outputs.packageJson).version}}"
+          echo "${{fromJson(steps.set_var.outputs.packageJson)}}"
   test-servicex:
     needs: build-matrix
     strategy:
       fail-fast: false
       matrix:
         python-version: [ 3.7 ]
-        app: ${{fromJson(needs.build-matrix.steps.read_file.outputs.contents)}}
+        app: ${{fromJson(needs.build-matrix.steps.set_var.outputs.packageJson)}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master

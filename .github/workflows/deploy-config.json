@@ -12,8 +12,8 @@
     "dir_name": "servicex_app"
   },
   {
-    "image_name": "servicex_code_gen_python",
-    "dir_name": "servicex_code_gen_python"
+    "image_name": "servicex_code_gen_func_adl_uproot",
+    "dir_name": "code_generator_funcadl_uproot"
   },
   {
     "image_name": "servicex_app",
@@ -24,19 +24,26 @@
     "dir_name": "servicex_code_gen_python"
   },
   {
-    "image_name": "servicex_app",
-    "dir_name": "servicex_app"
+    "image_name": "servicex_sidecar_transformer",
+    "dir_name": "transformer_sidecar"
   },
   {
-    "image_name": "servicex_code_gen_python",
-    "dir_name": "servicex_code_gen_python"
+    "image_name": "servicex_func_adl_uproot_transformer",
+    "dir_name": "uproot_transformer"
   },
   {
-    "image_name": "servicex_app",
-    "dir_name": "servicex_app"
+    "image_name": "x509-secrets",
+    "dir_name": "x509_secrets"
   },
+  {
+    "image_name": "servicex_func_adl_xaod_transformer",
+    "dir_name": "xaod_cpp_transformer",
+    "dockerfile": "DockerfileATLASxAOD"
+  },
+  ,
   {
     "image_name": "servicex_func_adl_cms_aod_transformer",
-    "dir_name": "xaod_cpp_transformer"
+    "dir_name": "xaod_cpp_transformer",
+    "dockerfile": "DockerfileCMSAOD"
   }
 ]

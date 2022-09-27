@@ -84,6 +84,7 @@ jobs:
 
       - name: Build Uproot Image
         uses: elgohr/Publish-Docker-Github-Action@master
+        working-directory: ${{ matrix.app.dir_name }}
         with:
           context: ${{ matrix.app.dir_name }}
           name: sslhep/${{ matrix.app.image_name }}:${{ steps.extract_tag_name.outputs.imagetag }}

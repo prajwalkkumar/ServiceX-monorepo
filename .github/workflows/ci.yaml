@@ -19,8 +19,6 @@ jobs:
         working-directory: ./.github/workflows
         id: set-matrix
         run: |
-#          JSON=$(cat deploy-config.json)
-#          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
           content=`cat deploy-config.json`
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"

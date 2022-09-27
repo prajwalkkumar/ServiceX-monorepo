@@ -49,7 +49,12 @@ jobs:
           echo "${{ matrix.app }}"
           python -m pip install --upgrade pip setuptools wheel
           pip install --no-cache-dir -r requirements.txt
-          pip install --no-cache-dir -r requirements_dev.txt
+          pip list
+        working-directory: ${{ matrix.app.dir_name }}
+      - name: Install test dependencies
+        if: ${{ matrix.app.test_required }}
+        run: |
+          pip install --no-cache-dir -r requirements_test.txt
           pip list
         working-directory: ${{ matrix.app.dir_name }}
       - name: Lint with Flake8
@@ -67,8 +72,7 @@ jobs:
 
 
   publish-servicex:
-#    needs: test-servicex
-    needs: build-matrix
+    needs: test-servicex
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

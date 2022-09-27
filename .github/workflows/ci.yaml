@@ -68,6 +68,7 @@ jobs:
 
   publish-servicex:
 #    needs: test-servicex
+    needs: build-matrix
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

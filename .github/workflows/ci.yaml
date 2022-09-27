@@ -67,7 +67,7 @@ jobs:
 
 
   publish-servicex:
-    needs: test-servicex
+#    needs: test-servicex
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master

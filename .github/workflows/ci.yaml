@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Read file contents
+        working-directory: ./.github/workflows
         id: set-matrix
         run: |
           JSON=$(cat deploy-config.json)

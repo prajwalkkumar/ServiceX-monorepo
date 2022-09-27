@@ -69,9 +69,6 @@ jobs:
   publish-servicex:
     needs: test-servicex
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        dockerfile: "Dockerfile"
     steps:
       - uses: actions/checkout@master
       - name: Extract tag name

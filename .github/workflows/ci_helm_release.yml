@@ -1,0 +1,39 @@
+name: Helm Release Workflow
+
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  call-test-and-publish-workflow:
+    uses: ssl-hep/ServiceX-monorepo/.github/workflows/ci.yml@main
+
+  release-helm:
+    needs: call-test-and-publish-workflow
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - working-directory: helm
+      - name: Read file contents
+        run: |
+          mkdir release-package
+          sed -e "s/appVersion: .*$/appVersion: $1/" -e "s/version: .*$/version: $2/" servicex/Chart.yaml 
+          sed -E -e "s/  tag:\s*[[:digit:]]{8}-[[:digit:]]{4}-stable.*$/  tag: $1/" -e "s/  defaultTransformerTag:\s*.+$/  defaultTransformerTag: $1/" servicex/values.yaml
+          helm dependency update servicex
+          helm package servicex --destination release-package
+          helm repo index ssl-helm-charts --url https://ssl-hep.github.io/ssl-helm-charts/
+
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'release-package'
+          destination-github-username: 'ssl-hep'
+          destination-repository-name: 'ssl-helm-charts'
+          target-branch: 'gh-pages'

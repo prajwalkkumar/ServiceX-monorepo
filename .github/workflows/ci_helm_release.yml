@@ -14,7 +14,7 @@ jobs:
     uses: .github/workflows/ci_helm.yml
 
   release-helm:
-    needs: call-test-and-publish-workflow
+#    needs: call-test-and-publish-workflow
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master

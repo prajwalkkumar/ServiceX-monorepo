@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - working-directory: helm
-      - name: Read file contents
+      - name: Create helm package
+        working-directory: ./helm
         run: |
           mkdir release-package
           sed -e "s/appVersion: .*$/appVersion: $1/" -e "s/version: .*$/version: $2/" servicex/Chart.yaml 

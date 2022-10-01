@@ -9,8 +9,8 @@ on:
   pull_request:
 
 jobs:
-  call-test-and-publish-workflow:
-    uses: ssl-hep/ServiceX-monorepo/.github/workflows/ci.yml@main
+#  call-test-and-publish-workflow:
+#    uses: ssl-hep/ServiceX-monorepo/.github/workflows/ci.yml
 
   release-helm:
     needs: call-test-and-publish-workflow

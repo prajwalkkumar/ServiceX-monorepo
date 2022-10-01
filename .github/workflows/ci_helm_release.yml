@@ -10,7 +10,8 @@ on:
 
 jobs:
   call-test-and-publish-workflow:
-    uses: ssl-hep/ServiceX-monorepo/.github/workflows/ci.yml
+    name: Run Tests on Helm
+    uses: .github/workflows/ci.yml
 
   release-helm:
     needs: call-test-and-publish-workflow

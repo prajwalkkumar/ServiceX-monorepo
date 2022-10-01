@@ -13,7 +13,7 @@ jobs:
 #    uses: ssl-hep/ServiceX-monorepo/.github/workflows/ci.yml
 
   release-helm:
-    needs: call-test-and-publish-workflow
+#    needs: call-test-and-publish-workflow
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master

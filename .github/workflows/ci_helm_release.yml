@@ -9,9 +9,9 @@ on:
   pull_request:
 
 jobs:
-  call-test-and-publish-workflow:
-    name: Run Tests on Helm
-    uses: .github/workflows/ci_helm.yml
+#  call-test-and-publish-workflow:
+#    name: Run Tests on Helm
+#    uses: .github/workflows/ci_helm.yml
 
   release-helm:
 #    needs: call-test-and-publish-workflow

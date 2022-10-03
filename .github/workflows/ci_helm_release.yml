@@ -1,4 +1,4 @@
-name: Helm Release Workflow
+name: Helm Release Workflow (Workflow Dispatch)
 
 on:
   workflow_dispatch:

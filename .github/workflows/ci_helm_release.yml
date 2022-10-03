@@ -35,6 +35,6 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: './helm/release-package'
-          destination-github-username: 'ssl-hep'
+          destination-github-username: 'prajwalkkumar'
           destination-repository-name: 'ssl-helm-charts'
-          target-branch: 'gh-pages'
+          target-branch: 'master'

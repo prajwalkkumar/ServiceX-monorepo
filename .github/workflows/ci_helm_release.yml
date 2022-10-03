@@ -22,8 +22,12 @@ jobs:
         working-directory: ./helm
         run: |
           mkdir release-package
+          echo '1st parameter $1'
+          echo '2nd parameter $2'
           sed -e "s/appVersion: .*$/appVersion: $1/" -e "s/version: .*$/version: $2/" servicex/Chart.yaml 
           sed -E -e "s/  tag:\s*[[:digit:]]{8}-[[:digit:]]{4}-stable.*$/  tag: $1/" -e "s/  defaultTransformerTag:\s*.+$/  defaultTransformerTag: $1/" servicex/values.yaml
+          cat servicex/Chart.yaml 
+          cat servicex/values.yaml
           helm dependency update servicex
           helm package servicex --destination release-package
           helm repo index release-package --url https://ssl-hep.github.io/ssl-helm-charts/

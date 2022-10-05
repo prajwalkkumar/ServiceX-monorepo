@@ -2,6 +2,7 @@ name: Helm Release Workflow (Workflow Dispatch)
 
 on:
   release:
+    types: [unpublished]
 
 jobs:
 #  call-test-and-publish-workflow:

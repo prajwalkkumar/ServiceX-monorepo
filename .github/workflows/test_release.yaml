@@ -37,7 +37,7 @@ jobs:
 
       - name: Move the package
         run: |
-          mv release-package ssl-helm-charts/
+          mv helm/release-package ssl-helm-charts/
           ls
 
       - name: Pushes to another repository

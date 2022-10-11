@@ -18,7 +18,7 @@ jobs:
         working-directory: ./helm
         run: |
           mkdir release-package
-          python3 update_versions.py
+          python3 ../.github/workflows/update_versions.py
           cat servicex/Chart.yaml
           cat servicex/values.yaml
           helm dependency update servicex

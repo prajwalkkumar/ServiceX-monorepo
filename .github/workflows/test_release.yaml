@@ -36,8 +36,9 @@ jobs:
           ref: master
 
       - name: Move the package
+        working-directory: ./helm
         run: |
-          mv helm/release-package ssl-helm-charts/
+          mv release-package ../ssl-helm-charts/
           ls
 
       - name: Pushes to another repository

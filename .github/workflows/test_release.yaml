@@ -13,6 +13,41 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Create helm package
+        working-directory: ./helm
+        run: |
+          mkdir release-package
+          python3 update_versions.py
+          cat servicex/Chart.yaml
+          cat servicex/values.yaml
+          helm dependency update servicex
+          helm package servicex --destination release-package
+          helm repo index release-package --url https://ssl-hep.github.io/ssl-helm-charts/
+          pwd
+
+      - name: Pull ssl-helm-charts
+        uses: actions/checkout@master
+        with:
+          name: prajwalkkumar/ssl-helm-charts
+          ref: refs/heads/gh-pages
+
+      - name: Move the package
+        run: |
+          mv release-package ssl-helm-charts/
+          ls
+
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+#          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: './helm/release-package'
+          destination-github-username: 'prajwalkkumar'
+          destination-repository-name: 'ssl-helm-charts'
+          target-branch: 'master'
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

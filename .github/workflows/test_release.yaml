@@ -32,7 +32,7 @@ jobs:
       - name: Pull ssl-helm-charts
         uses: actions/checkout@master
         with:
-          name: prajwalkkumar/ssl-helm-charts
+          repository: prajwalkkumar/ssl-helm-charts
           ref: master
 
       - name: Move the package

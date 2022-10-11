@@ -39,7 +39,6 @@ jobs:
         working-directory: ./helm
         run: |
           mv release-package ../ssl-helm-charts/
-          ls
 
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

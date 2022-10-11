@@ -51,6 +51,12 @@ jobs:
           destination-repository-name: 'ssl-helm-charts'
           target-branch: 'master'
 
+      - name: Pull flux-river-configs
+        uses: actions/checkout@master
+        with:
+          repository: prajwalkkumar/flux-river-configs
+          ref: master
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

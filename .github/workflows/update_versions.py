@@ -7,11 +7,15 @@ if len(sys.argv)==1:
 
 CHART_YAML_PATH = "servicex/Chart.yaml"
 VALUES_YAML_PATH = "servicex/values.yaml"
+UPROOT_PATH = "flux_river_configs/servicex-int-uproot/values.yaml"
+XAOD_PATH = "flux_river_configs/servicex-int-xaod/values.yaml"
 
 version = sys.argv[1]
 
 chart_data = dict()
 values_data = dict()
+uproot_data = dict()
+xaod_data = dict()
 
 with open(CHART_YAML_PATH, 'r') as stream:
     try:
@@ -35,9 +39,30 @@ values_data['transformer']['defaultTransformerTag'] = version
 values_data['x509Secrets']['tag'] = version
 values_data['codeGen']['tag'] = version
 
+with open(UPROOT_PATH, 'r') as stream:
+    try:
+        uproot_data = yaml.load(stream,Loader=yaml.SafeLoader)
+    except yaml.YAMLError as exc:
+        print(exc)
+
+uproot_data['spec']['chart']['spec']['version'] = version
+
+with open(XAOD_PATH, 'r') as stream:
+    try:
+        xaod_data = yaml.load(stream,Loader=yaml.SafeLoader)
+    except yaml.YAMLError as exc:
+        print(exc)
+
+xaod_data['spec']['chart']['spec']['version'] = version
 
 with open(CHART_YAML_PATH, 'w') as yaml_file:
     yaml_file.write(yaml.dump(chart_data, default_flow_style=False))
 
 with open(VALUES_YAML_PATH, 'w') as yaml_file:
+    yaml_file.write(yaml.dump(values_data, default_flow_style=False))
+
+with open(UPROOT_PATH, 'w') as yaml_file:
+    yaml_file.write(yaml.dump(values_data, default_flow_style=False))
+
+with open(XAOD_PATH, 'w') as yaml_file:
     yaml_file.write(yaml.dump(values_data, default_flow_style=False))

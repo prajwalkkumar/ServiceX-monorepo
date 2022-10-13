@@ -62,7 +62,7 @@ jobs:
           source-directory: 'flux_river_configs'
           destination-github-username: 'prajwalkkumar'
           destination-repository-name: 'flux_river_configs'
-          target-branch: 'master'
+          target-branch: 'main'
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

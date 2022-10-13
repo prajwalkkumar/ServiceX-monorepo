@@ -18,11 +18,13 @@ jobs:
         with:
           repository: prajwalkkumar/flux_river_configs
           ref: master
+          path: flux_river_configs
       - name: Pull ssl-helm-charts
         uses: actions/checkout@master
         with:
           repository: prajwalkkumar/ssl-helm-charts
           ref: master
+          path: ssl-helm-charts
       - name: Create release version env var
         run: |
           echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
@@ -47,7 +49,7 @@ jobs:
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
-          source-directory: './helm/release-package'
+          source-directory: 'ssl-helm-charts'
           destination-github-username: 'prajwalkkumar'
           destination-repository-name: 'ssl-helm-charts'
           target-branch: 'master'
@@ -56,7 +58,7 @@ jobs:
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
-          source-directory: './helm/release-package'
+          source-directory: 'flux_river_configs'
           destination-github-username: 'prajwalkkumar'
           destination-repository-name: 'flux_river_configs'
           target-branch: 'master'

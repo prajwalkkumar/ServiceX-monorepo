@@ -7,8 +7,8 @@ if len(sys.argv)==1:
 
 CHART_YAML_PATH = "servicex/Chart.yaml"
 VALUES_YAML_PATH = "servicex/values.yaml"
-UPROOT_PATH = "flux_river_configs/servicex-int-uproot/values.yaml"
-XAOD_PATH = "flux_river_configs/servicex-int-xaod/values.yaml"
+UPROOT_PATH = "../flux_river_configs/servicex-int-uproot/values.yaml"
+XAOD_PATH = "../flux_river_configs/servicex-int-xaod/values.yaml"
 
 version = sys.argv[1]
 

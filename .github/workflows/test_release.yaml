@@ -32,14 +32,13 @@ jobs:
       - name: Create helm package
         working-directory: ./helm
         run: |
-          mkdir release-package
+          pwd
           python3 ../.github/workflows/update_versions.py $RELEASE_VERSION
           cat servicex/Chart.yaml
           cat servicex/values.yaml
           helm dependency update servicex
           helm package servicex --destination ssl-helm-charts
           helm repo index release-package --url https://ssl-hep.github.io/ssl-helm-charts/
-          pwd
 #      - name: Move the package
 #        working-directory: ./helm
 #        run: |

@@ -13,12 +13,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Pull flux_river_configs
-        uses: actions/checkout@master
-        with:
-          repository: prajwalkkumar/flux_river_configs
-          ref: master
-          path: flux_river_configs
+#      - name: Pull flux_river_configs
+#        uses: actions/checkout@master
+#        with:
+#          repository: prajwalkkumar/flux_river_configs
+#          ref: master
+#          path: flux_river_configs
       - name: Pull ssl-helm-charts
         uses: actions/checkout@master
         with:

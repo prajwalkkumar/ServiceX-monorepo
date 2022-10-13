@@ -40,7 +40,7 @@ jobs:
           helm dependency update servicex
           helm package servicex --destination release-package
           helm repo index release-package --url https://ssl-hep.github.io/ssl-helm-charts/
-          mv release-package/* ssl-helm-charts/
+          mv release-package/* ../ssl-helm-charts/
 #      - name: Move the package
 #        working-directory: ./helm
 #        run: |

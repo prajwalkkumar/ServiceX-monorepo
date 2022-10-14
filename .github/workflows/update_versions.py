@@ -1,68 +1,81 @@
 import yaml
 import sys
 
-if len(sys.argv)==1:
-    print("Error. Please enter version to update.")
-    exit(1)
+def update_version_in_servicex_chart_yaml(version):
+    servicex_chart_yaml_file = "servicex/Chart.yaml"
+    with open(servicex_chart_yaml_file, 'r') as stream:
+        try:
+            servicex_chart_data = yaml.load(stream, Loader=yaml.SafeLoader)
+        except yaml.YAMLError as exc:
+            print("ERR: loading Yaml file")
+            raise Exception(exc)
 
-CHART_YAML_PATH = "servicex/Chart.yaml"
-VALUES_YAML_PATH = "servicex/values.yaml"
-UPROOT_PATH = "../flux_river_configs/servicex-int-uproot/values.yaml"
-XAOD_PATH = "../flux_river_configs/servicex-int-xaod/values.yaml"
+    servicex_chart_data['appVersion'] = version
+    servicex_chart_data['version'] = version
 
-version = sys.argv[1]
+    with open(servicex_chart_yaml_file, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(servicex_chart_data, default_flow_style=False))
 
-chart_data = dict()
-values_data = dict()
-uproot_data = dict()
-xaod_data = dict()
+def update_version_in_servicex_values_yaml(version):
+    servicex_values_yaml_file = "servicex/values.yaml"
+    with open(servicex_values_yaml_file, 'r') as stream:
+        try:
+            servicex_values_data = yaml.load(stream, Loader=yaml.SafeLoader)
+        except yaml.YAMLError as exc:
+            print("ERR: loading Yaml file")
+            raise Exception(exc)
 
-with open(CHART_YAML_PATH, 'r') as stream:
-    try:
-        chart_data = yaml.load(stream,Loader=yaml.SafeLoader)
-    except yaml.YAMLError as exc:
-        print(exc)
+    servicex_values_data['app']['tag'] = version
+    servicex_values_data['didFinder']['rucio']['tag'] = version
+    servicex_values_data['didFinder']['CERNOpenData']['tag'] = version
+    servicex_values_data['transformer']['defaultTransformerTag'] = version
+    servicex_values_data['x509Secrets']['tag'] = version
+    servicex_values_data['codeGen']['tag'] = version
 
-chart_data['appVersion'] = version
-chart_data['version'] = version
+    with open(servicex_values_yaml_file, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(servicex_values_data, default_flow_style=False))
 
-with open(VALUES_YAML_PATH, 'r') as stream:
-    try:
-        values_data = yaml.load(stream,Loader=yaml.SafeLoader)
-    except yaml.YAMLError as exc:
-        print(exc)
 
-values_data['app']['tag'] = version
-values_data['didFinder']['rucio']['tag'] = version
-values_data['didFinder']['CERNOpenData']['tag'] = version
-values_data['transformer']['defaultTransformerTag'] = version
-values_data['x509Secrets']['tag'] = version
-values_data['codeGen']['tag'] = version
 
-with open(UPROOT_PATH, 'r') as stream:
-    try:
-        uproot_data = yaml.load(stream,Loader=yaml.SafeLoader)
-    except yaml.YAMLError as exc:
-        print(exc)
 
-uproot_data['spec']['chart']['spec']['version'] = version
+def update_version_in_flux_river_uproot_values_yaml(version):
+    flux_river_uproot_values_file = "../flux_river_configs/servicex-int-uproot/values.yaml"
+    with open(flux_river_uproot_values_file, 'r') as stream:
+        try:
+            flux_river_uproot_data = yaml.load(stream, Loader=yaml.SafeLoader)
+        except yaml.YAMLError as exc:
+            print(exc)
 
-with open(XAOD_PATH, 'r') as stream:
-    try:
-        xaod_data = yaml.load(stream,Loader=yaml.SafeLoader)
-    except yaml.YAMLError as exc:
-        print(exc)
+    flux_river_uproot_data['spec']['chart']['spec']['version'] = version
+    with open(flux_river_uproot_values_file, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(flux_river_uproot_data, default_flow_style=False))
 
-xaod_data['spec']['chart']['spec']['version'] = version
 
-with open(CHART_YAML_PATH, 'w') as yaml_file:
-    yaml_file.write(yaml.dump(chart_data, default_flow_style=False))
+def update_version_in_flux_river_xaod_values_yaml(version):
+    flux_river_xaod_values_file = "../flux_river_configs/servicex-int-xaod/values.yaml"
 
-with open(VALUES_YAML_PATH, 'w') as yaml_file:
-    yaml_file.write(yaml.dump(values_data, default_flow_style=False))
+    with open(flux_river_xaod_values_file, 'r') as stream:
+        try:
+            flux_river_xaod_data = yaml.load(stream, Loader=yaml.SafeLoader)
+        except yaml.YAMLError as exc:
+            print(exc)
 
-with open(UPROOT_PATH, 'w') as yaml_file:
-    yaml_file.write(yaml.dump(values_data, default_flow_style=False))
+    flux_river_xaod_data['spec']['chart']['spec']['version'] = version
 
-with open(XAOD_PATH, 'w') as yaml_file:
-    yaml_file.write(yaml.dump(values_data, default_flow_style=False))
+    with open(flux_river_xaod_values_file, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(flux_river_xaod_data, default_flow_style=False))
+
+
+if __name__ == '__main__':
+
+    if len(sys.argv) == 1:
+        raise Exception("ERR: Please enter version to update.")
+
+    version = sys.argv[1]
+    update_version_in_servicex_chart_yaml(version)
+    update_version_in_servicex_values_yaml(version)
+    update_version_in_flux_river_uproot_values_yaml(version)
+    update_version_in_flux_river_xaod_values_yaml(version)
+
+
+

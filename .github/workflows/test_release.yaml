@@ -7,8 +7,11 @@ on:
 name: Create Release
 
 jobs:
+  call-ci-helm-tests:
+    uses: ./.github/workflows/ci_helm.yml
   build:
     name: Create Release
+    needs: call-ci-helm-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

@@ -9,27 +9,27 @@ on:
   pull_request:
   workflow_call:
 
-#jobs:
-#  build-matrix:
-#    runs-on: ubuntu-latest
-#    outputs:
-#      matrix: ${{ steps.set-matrix.outputs.matrix }}
-#    steps:
-#      - uses: actions/checkout@master
-#      - name: Read file contents
-#        working-directory: ./.github/workflows
-#        id: set-matrix
-#        run: |
-#          content=`cat deploy-config.json`
-#          # the following lines are only required for multi line json
-#          content="${content//'%'/'%25'}"
-#          content="${content//$'\n'/'%0A'}"
-#          content="${content//$'\r'/'%0D'}"
-#          # end of optional handling for multi line json
-#          echo "::set-output name=matrix::$content"
-#      - run: |
-#          echo "${{ steps.set-matrix.outputs.matrix }}"
-#
+jobs:
+  build-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@master
+      - name: Read file contents
+        working-directory: ./.github/workflows
+        id: set-matrix
+        run: |
+          content=`cat deploy-config.json`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=matrix::$content"
+      - run: |
+          echo "${{ steps.set-matrix.outputs.matrix }}"
+
 #  test-servicex:
 #    needs: build-matrix
 #    strategy:

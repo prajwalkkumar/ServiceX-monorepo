@@ -57,7 +57,7 @@ jobs:
       - name: Pushes to flux-river-configs repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY_FLUX }}
         with:
           source-directory: 'flux_river_configs'
           destination-github-username: 'prajwalkkumar'

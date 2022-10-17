@@ -51,7 +51,7 @@ jobs:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
           source-directory: 'ssl-helm-charts'
-          destination-github-username: 'prajwalkkumar'
+          destination-github-username: 'ritwik-deshpande'
           destination-repository-name: 'ssl-helm-charts'
           target-branch: 'master'
       - name: Pushes to flux-river-configs repository

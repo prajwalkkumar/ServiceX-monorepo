@@ -49,7 +49,7 @@ jobs:
       - name: Pushes to ssl-helm-packages repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: 'ssl-helm-charts'
           destination-github-username: 'ritwik-deshpande'
@@ -58,7 +58,7 @@ jobs:
       - name: Pushes to flux-river-configs repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY_FLUX }}
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: 'flux_river_configs'
           destination-github-username: 'prajwalkkumar'

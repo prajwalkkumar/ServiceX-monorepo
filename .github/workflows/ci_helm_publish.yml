@@ -38,7 +38,7 @@ jobs:
         run: |
           pwd
           mkdir release-package
-          pip3 install ruamel
+          pip3 install ruamel.yaml
           python3 ../.github/workflows/update_versions.py $RELEASE_VERSION
           cat servicex/Chart.yaml
           cat servicex/values.yaml

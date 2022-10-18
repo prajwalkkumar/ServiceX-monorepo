@@ -26,7 +26,7 @@ jobs:
       - name: Pull ssl-helm-charts
         uses: actions/checkout@master
         with:
-          repository: ritwik-deshpande/ssl-helm-charts
+          repository: prajwalkkumar/ssl-helm-charts
           ref: master
           path: ssl-helm-charts
       - name: Create release version env var
@@ -52,7 +52,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: 'ssl-helm-charts'
-          destination-github-username: 'ritwik-deshpande'
+          destination-github-username: 'prajwalkkumar'
           destination-repository-name: 'ssl-helm-charts'
           target-branch: 'master'
       - name: Pushes to flux-river-configs repository

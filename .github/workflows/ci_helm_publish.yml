@@ -12,7 +12,7 @@ jobs:
 #    uses: ./.github/workflows/ci_helm_tests.yml
   build:
     name: Create Release
-    needs: [call-ci-servicex, call-ci-helm-tests]
+#    needs: [call-ci-servicex, call-ci-helm-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

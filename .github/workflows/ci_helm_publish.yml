@@ -6,10 +6,10 @@ on:
 
 name: Create and Publish Helm Packages
 jobs:
-  call-ci-servicex:
-    uses: ./.github/workflows/ci_servicex.yml
-  call-ci-helm-tests:
-    uses: ./.github/workflows/ci_helm_tests.yml
+#  call-ci-servicex:
+#    uses: ./.github/workflows/ci_servicex.yml
+#  call-ci-helm-tests:
+#    uses: ./.github/workflows/ci_helm_tests.yml
   build:
     name: Create Release
     needs: [call-ci-servicex, call-ci-helm-tests]

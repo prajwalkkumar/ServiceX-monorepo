@@ -1,6 +1,13 @@
 name: Lint and Test Helm Charts
 
-on: [pull_request, workflow_call,push]
+on:
+  pull_request:
+  workflow_call:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*"
 
 jobs:
   lint-test:

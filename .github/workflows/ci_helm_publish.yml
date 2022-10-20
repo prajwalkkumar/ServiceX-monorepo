@@ -55,7 +55,9 @@ jobs:
         run: |
           helm dependency update servicex
           helm package servicex
+          ls
           mv servicex-$RELEASE_VERSION.tgz ../ssl-helm-charts
+          mv index.yaml ../ssl-helm-charts
           helm repo index ssl-helm-charts --url https://ssl-hep.github.io/ssl-helm-charts/
       - name: Pushes to ssl-helm-packages repository
         uses: cpina/github-action-push-to-another-repository@main
